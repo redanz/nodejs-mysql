@@ -26,6 +26,8 @@ inquirer
 			viewLowInventory();
 		} else if (choice == 'Add to Inventory') {
 			addToInventory();
+		} else if (choice == 'Add New Product') {
+			addNewProduct();
 		}
 	})
 
@@ -49,7 +51,7 @@ function viewProducts() {
 
 function viewLowInventory() {
 	connection.connect();
-	connection.query('SELECT * FROM products WHERE stock_quantity < 50', function
+	connection.query('SELECT * FROM products WHERE stock_quantity < 5', function
 		(error, results, fields) {
 			if (error) throw error;
 			for (var i in results) {
@@ -79,7 +81,7 @@ function addToInventory() {
 				.prompt([
 					{
 						type: 'list',
-						message: 'Select Item to Add:',
+						message: 'Select item to add quantity for:',
 						choices: currentItems,
 						name: 'choice'
 					},
@@ -88,14 +90,53 @@ function addToInventory() {
 						message: 'Add stock quantity:',
 						name: 'addQuantity'
 					}
-				]).then(function(response) {
+				]).then(
+					function(response) {
 					currentQuantity[response.choice] += parseInt(response.addQuantity);
-					connection.query('UPDATE products SET stock_quantity = ? WHERE product_name = ?', [currentQuantity[response.choice], response.choice], function(error, results, fields) {
+					connection.query('UPDATE products SET stock_quantity = ? WHERE product_name = ?', 
+						[currentQuantity[response.choice], response.choice], 
+						function(error, results, fields) {
 							if (error) throw error;
 							console.log('Updated quantity for ' + response.choice + ' to: ' + currentQuantity[response.choice]);
 						});
 					connection.end();
-				})
-				
+				})		
+		});
+}
+
+
+function addNewProduct() {
+	inquirer
+		.prompt([
+			{
+				type: 'input',
+				message: 'New product name:',
+				name: 'product'
+			},
+			{
+				type: 'list',
+				message: 'Department:',
+				choices: ['Clothing', 'Electronics', 'Home', 'Beauty & Health', 'Games & Toys', 'Sports', 'Automotive'],
+				name: 'department'
+			},
+			{
+				type: 'input',
+				message: 'Price:',
+				name: 'price'
+			},
+			{
+				type: 'input',
+				message: 'Stock quantity:',
+				name: 'quantity'
+			}
+		]).then(
+			function(response) {
+			connection.connect();
+			connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)', [response.product, response.department, parseInt(response.price), parseInt(response.quantity)],
+				function (error, results, fields) {
+					if (error) throw error;
+					console.log('Success: ' + response.quantity + ' items of ' + response.product + ' were added to ' + response.department + ' at $' + response.price + '/item.' );
+					connection.end();
+				});
 		});
 }

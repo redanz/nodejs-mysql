@@ -14,14 +14,14 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
-	('Shoes', 'Clothing', 100, 50),
-	('Shirt', 'Clothing', 50, 100),
-	('Charging Cable', 'Electronics', 20, 300),
-	('Vacuum Cleaner', 'Home', 350, 20),
-	('Shampoo', 'Beauty & Health', 15, 500),
-	('Jenga', 'Toys', 40, 80),
-	('Basketball', 'Sports', 25, 250),
-	('Jump Starter', 'Automotive', 100, 55),
-	('Headphones', 'Electronics', 150, 99),
-	('Beard Trimmer', 'Beauty & Health', 30, 60);
+	('Shoes', 'Clothing', 100, 10),
+	('Shirt', 'Clothing', 50, 14),
+	('Charging Cable', 'Electronics', 20, 25),
+	('Vacuum Cleaner', 'Home', 350, 2),
+	('Shampoo', 'Beauty & Health', 15, 16),
+	('Jenga', 'Games & Toys', 40, 1),
+	('Basketball', 'Sports', 25, 11),
+	('Jump Starter', 'Automotive', 100, 7),
+	('Headphones', 'Electronics', 150, 3),
+	('Desk Lamp', 'Home', 30, 9);
 	

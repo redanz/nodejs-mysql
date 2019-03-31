@@ -35,7 +35,7 @@ function askUser() {
 		},
 		{
 			type: 'input',
-			message: 'Type quantity of that product you\'d like to purchase:',
+			message: 'How many would you like to purchase?',
 			name: 'quantity'
 		}
 		]).then(function(response) {	
@@ -45,7 +45,7 @@ function askUser() {
 					stockItem = results[0].stock_quantity;
 					priceItem = results[0].price;
 					if (response.quantity > stockItem) {
-						console.log('Insufficient quantity in stock, please choose a lower number.');
+						console.log('Insufficient quantity in stock.');
 						askUser();
 					} else {
 						stockItem -= response.quantity;
