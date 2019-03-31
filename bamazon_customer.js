@@ -18,7 +18,6 @@ function displayProducts() {
 			for (var i in results) {
 				console.log(results[i].id + '    ' + results[i].product_name + ' ($' + results[i].price + ')');
 			}
-			// console.log(results);
 			askUser();
 		});
 }
